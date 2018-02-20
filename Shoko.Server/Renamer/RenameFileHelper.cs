@@ -64,29 +64,37 @@ namespace Shoko.Server
             Assembly assembly = Assembly.GetExecutingAssembly();
             UriBuilder uri = new UriBuilder(assembly.GetName().CodeBase);
             string dirname = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
+            logger.Info("InitialiseRenamers: dir: {0}", dirname);
             asse.Add(Assembly.GetCallingAssembly()); //add this to dynamically load as well.
             foreach (string dll in Directory.GetFiles(dirname, $"Renamer.*.dll", SearchOption.AllDirectories))
             {
                 try
                 {
+                    logger.Info("InitialiseRenamers: Loading: {0}",dll);
                     asse.Add(Assembly.LoadFile(dll));
+                    logger.Info("InitialiseRenamers: {0} loaded",dll);
                 }
-                catch (FileLoadException)
+                catch (FileLoadException ex)
                 {
+                    logger.Error("InitialiseRenamers: FileLoadException: {0}",ex.ToString(),ex);
                 }
-                catch (BadImageFormatException)
+                catch (BadImageFormatException ex)
                 {
+                    logger.Error("InitialiseRenamers: BadImageFormarException: {0}",ex.ToString(),ex);
                 }
             }
 
             var implementations = asse.SelectMany(a => a.GetTypes())
                 .Where(a => a.GetInterfaces().Contains(typeof(IRenamer)));
-
+            logger.Info("InitialiseRenamers: IRenamer implementations: {0}",implementations.Count());
             foreach (var implementation in implementations)
             {
+                logger.Info("InitialiseRenamers: impl: {0}",implementation.FullName);
                 IEnumerable<RenamerAttribute> attributes = implementation.GetCustomAttributes<RenamerAttribute>();
+                logger.Info("InitialiseRenamers: attributes: {0}",attributes.Count());
                 foreach ((string key, string desc) in attributes.Select(a => (key: a.RenamerId, desc: a.Description)))
                 {
+                    logger.Info("InitialiseRenamers: RenamerId: {0} Description: {1}",key, desc);
                     if (key == null) continue;
                     if (ScriptImplementations.ContainsKey(key))
                     {
