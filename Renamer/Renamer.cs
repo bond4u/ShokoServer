@@ -120,7 +120,7 @@ namespace MyRenamer
 
       ImportFolder dest = RepoFactory.ImportFolder.GetByImportLocation(IsPorn ? "/_Hentai/" : "/_Animes/");
 //      ImportFolder dest = RepoFactory.ImportFolder.GetByImportLocation("/_Animes/");
-          
+      
       return (dest, folder.ToString());
     }
   }
