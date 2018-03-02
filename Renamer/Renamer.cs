@@ -123,5 +123,5 @@ namespace MyRenamer
           
       return (dest, folder.ToString());
     }
-  }
-}
+  } // class Renamer
+} // ns MyRenamer
