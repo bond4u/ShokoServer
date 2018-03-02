@@ -263,7 +263,14 @@ namespace LeanWork.IO.FileSystem
 
         private void StopRaisingBufferedEvents(object _ = null, EventArgs __ = null)
         {
-            _cancellationTokenSource?.Cancel();
+            try
+            {
+                _cancellationTokenSource?.Cancel();
+            }
+            catch (ObjectDisposedException)
+            {
+                //ignore
+            }
         }
 
         public event ErrorEventHandler Error
@@ -291,8 +298,9 @@ namespace LeanWork.IO.FileSystem
 
         private void RaiseBufferedEventsUntilCancelled()
         {
-            _cancellationTokenSource?.Dispose();
+            var tmp = _cancellationTokenSource;//?.Dispose();
             _cancellationTokenSource = new CancellationTokenSource();
+//            tmp?.Dispose();
 
             Task.Run(() =>
             {
