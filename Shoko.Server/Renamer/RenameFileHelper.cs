@@ -66,7 +66,9 @@ namespace Shoko.Server
             string dirname = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
             logger.Info("InitialiseRenamers: dir: {0}", dirname);
             asse.Add(Assembly.GetCallingAssembly()); //add this to dynamically load as well.
-            foreach (string dll in Directory.GetFiles(dirname, $"Renamer.*.dll", SearchOption.AllDirectories))
+            string[] files = Directory.GetFiles(dirname, $"Renamer.*.dll", SearchOption.AllDirectories);
+            logger.Info("InitialiseRenamers: found {0}",files.Length);
+            foreach (string dll in files)
             {
                 try
                 {
