@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoko.Server", "Shoko.Server\Shoko.Server.csproj", "{DA8F0783-0F82-4106-9860-6F09BA2EA522}"
 EndProject
@@ -50,6 +50,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64", "x64", "{99CC23E0-FC6
 	ProjectSection(SolutionItems) = preProject
 		Dependencies\x64\librhash.dll = Dependencies\x64\librhash.dll
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renamer", "Renamer\Renamer.csproj", "{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -324,6 +326,30 @@ Global
 		{3A8E0177-9701-4A59-A6CD-16C6908839EA}.Release|Win32.Build.0 = Release|Any CPU
 		{3A8E0177-9701-4A59-A6CD-16C6908839EA}.Release|x64.ActiveCfg = Release|Any CPU
 		{3A8E0177-9701-4A59-A6CD-16C6908839EA}.Release|x64.Build.0 = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.CLI|Any CPU.ActiveCfg = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.CLI|Any CPU.Build.0 = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.CLI|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.CLI|Mixed Platforms.Build.0 = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.CLI|Win32.ActiveCfg = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.CLI|Win32.Build.0 = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.CLI|x64.ActiveCfg = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.CLI|x64.Build.0 = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Debug|Win32.Build.0 = Debug|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Debug|x64.Build.0 = Debug|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Release|Win32.ActiveCfg = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Release|Win32.Build.0 = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Release|x64.ActiveCfg = Release|Any CPU
+		{18EEEBCD-D64A-4A4A-8B5B-82EC7E7F07DF}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
