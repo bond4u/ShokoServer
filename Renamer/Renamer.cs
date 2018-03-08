@@ -79,7 +79,7 @@ namespace MyRenamer
         height = Utils.GetVideoHeight(video.VideoResolution);
       name.Append($" [{height}p]"); //that's not very nice
       //video encoding
-//            name.Append($" {(file?.File_VideoCodec ?? video.VideoCodec).Replace("\\", "").Replace("/", "")}".TrimEnd());
+//      name.Append($" {(file?.File_VideoCodec ?? video.VideoCodec).Replace("\\", "").Replace("/", "")}".TrimEnd());
       //don't care about bits
       if (video.VideoBitDepth == "10") {
 //        name.Append($" {video.VideoBitDepth}bit");
@@ -115,7 +115,7 @@ namespace MyRenamer
       }
       folder.Append($"{Utils.ReplaceInvalidFolderNameCharacters(anime.PreferredTitle)}");
 
-      ImportFolder dest = RepoFactory.ImportFolder.GetByImportLocation(IsPorn ? "/porn/" : "/anime/");
+      ImportFolder dest = RepoFactory.ImportFolder.GetByImportLocation(IsPorn ? "/_Hentai/" : "/_Animes/");
 //      ImportFolder dest = RepoFactory.ImportFolder.GetByImportLocation("/_Animes/");
           
       return (dest, folder.ToString());
