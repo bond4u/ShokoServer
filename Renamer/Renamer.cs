@@ -38,6 +38,7 @@ namespace MyRenamer
       }
       //then episode name/title
       name.Append($" {anime.PreferredTitle}");
+      
       //what kind of file is it
       if (anime.AnimeType == (int) AnimeType.Movie) {
         //movie has a year
@@ -60,9 +61,10 @@ namespace MyRenamer
         //add eps/creds number & prepend zeroes
         name.Append($" - {prefix}{PadNumberTo(episode.EpisodeNumber, epCount)}");
       }
+
       //is there a version
       if (1<file.FileVersion)
-        name.Append($" v{file.FileVersion}");
+        name.Append($"v{file.FileVersion}");
       //is it censored
       if (0<file.IsCensored)
         name.Append($" Censored");
