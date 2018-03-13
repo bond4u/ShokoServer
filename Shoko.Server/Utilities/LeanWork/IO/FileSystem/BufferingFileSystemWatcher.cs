@@ -412,7 +412,11 @@ namespace LeanWork.IO.FileSystem
         {
             if (disposing)
             {
+try {
                 _cancellationTokenSource?.Cancel();
+} catch (ObjectDisposedException) {
+  //ignore
+}
                 _cancellationTokenSource?.Dispose();
                 _containedFSW?.Dispose();
 
