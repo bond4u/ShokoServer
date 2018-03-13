@@ -61,7 +61,7 @@ namespace MyRenamer
         //add eps/creds number & prepend zeroes
         name.Append($" - {prefix}{PadNumberTo(episode.EpisodeNumber, epCount)}");
       }
-
+      
       //is there a version
       if (1<file.FileVersion)
         name.Append($"v{file.FileVersion}");
@@ -110,10 +110,11 @@ namespace MyRenamer
 //      folder.Append($"{anime.BeginYear}/");
       DateTime date = (DateTime)anime.AirDate;
       if (null != date) {
-        if (1 < date.Year)
+        if (1 < date.Year) {
           folder.Append($"{date.Year}/");
-        if (0 < date.Month)
-          folder.Append($"{PadNumberTo(date.Month, 12)}/");
+          if (0 < date.Month)
+            folder.Append($"{PadNumberTo(date.Month, 12)}/");
+        }
       }
       folder.Append($"{Utils.ReplaceInvalidFolderNameCharacters(anime.PreferredTitle)}");
 
