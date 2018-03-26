@@ -89,7 +89,7 @@ namespace MyRenamer
       //resolution end
 //      name.Append(')');
 
-      name.Append($" [{video.CRC32.ToUpper()}]");
+      name.Append($"[{video.CRC32.ToUpper()}]");
       name.Append($"{System.IO.Path.GetExtension(video.FileName)}");
       
       return Utils.ReplaceInvalidFolderNameCharacters(name.ToString());
