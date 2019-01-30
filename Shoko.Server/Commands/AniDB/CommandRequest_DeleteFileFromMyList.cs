@@ -170,5 +170,13 @@ namespace Shoko.Server.Commands
             };
             return cq;
         }
+        public new void Save() {
+          if (AniDBFileDeleteType.DeleteLocalOnly == ServerSettings.AniDB_MyList_DeleteType) {
+            logger.Info("MyList delete action 'local delete' is a no-op, not saving cmd");
+            return;
+          } else {
+            base.Save();
+          }
+        }
     }
 }

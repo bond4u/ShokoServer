@@ -1,0 +1,17 @@
+Add upstream remote:
+> get remote add <shoko> <https://github.com/user/repo.git>
+
+Fetch all changes from upstream including sub-modules:
+> git fetch <shoko> --recurse-submodules
+
+Make sure You're in <master> branch:
+> git checkout master
+
+Update <HEAD> to latest:
+> git rebase shoko/master
+
+Update sub-modules:
+> git submodule update --recursive
+
+Push changes (possibly force with -f):
+> git push

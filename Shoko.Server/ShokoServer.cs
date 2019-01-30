@@ -388,6 +388,7 @@ namespace Shoko.Server
             }
             catch (Exception e)
             {
+logger.Error(e,"NetPermissions Exception: {0}",e.ToString());
                 if (Utils.IsAdministrator())
                 {
                     Utils.ShowMessage(null, "Settings the ports, after that JMMServer will quit, run again in normal mode");
@@ -649,10 +650,12 @@ namespace Shoko.Server
         {
             logger.Info("Initializing Web Hosts...");
             ServerState.Instance.CurrentSetupStatus = Resources.Server_InitializingHosts;
-            bool started = true;
-            started &= NetPermissionWrapper(StartNancyHost);
+logger.Info("processing permissions..");
+            bool started = NetPermissionWrapper(StartNancyHost);
+logger.Info("Started: {0}", started);
             if (!started)
             {
+logger.Info("failed, stopping..");
                 StopHost();
                 throw new Exception("Failed to start all of the network hosts");
             }
@@ -1512,8 +1515,10 @@ namespace Shoko.Server
                 MimeTypes.AddType("flv", "video/x-flv");
             }
 
-            if (hostNancy != null)
+            if (hostNancy != null) {
+logger.Info("host already exists, nothing to do");
                 return;
+}
             //nancy will rewrite localhost into http://+:port
             HostConfiguration config = new HostConfiguration
             {
@@ -1534,16 +1539,18 @@ namespace Shoko.Server
             // Don't let Nancy do this. We do it ourselves.
             // This needs to throw an error for our url registration to call.
 
-
             config.UrlReservations.CreateAutomatically = false;
             config.RewriteLocalhost = true;
             config.AllowChunkedEncoding = false;
+logger.Info("creating host {0}..",ServerSettings.JMMServerPort);
             hostNancy = new NancyHost(config,
-                new Uri("http://localhost:" + ServerSettings.JMMServerPort));
+                new Uri("http://192.168.1.9:" + ServerSettings.JMMServerPort));
+logger.Info("using nat.upnp..");
             if (ServerSettings.ExperimentalUPnP)
                 NAT.UPnPJMMFilePort(int.Parse(ServerSettings.JMMServerPort));
+logger.Info("nat upnp done");
             JsonSettings.MaxJsonLength = int.MaxValue;
-
+logger.Info("starting..");
             // Even with error callbacks, this may still throw an error in some parts, so log it!
             try
             {

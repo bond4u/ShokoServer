@@ -3618,8 +3618,11 @@ namespace Shoko.Server
 
                 if (contract.IsDropDestination == 1)
                 {
+logger.Info("contract.id={0} cloudid={1}", contract.ImportFolderID, contract.CloudID);
                     foreach (SVR_ImportFolder imf in allFolders)
                     {
+logger.Info("imf.id={0} couldid={1} dropsrc={2} dropdst={3}", imf.ImportFolderID, imf.CloudID, 
+imf.FolderIsDropSource, imf.FolderIsDropDestination);
                         if (contract.CloudID == imf.CloudID && imf.IsDropDestination == 1 &&
                             (contract.ImportFolderID == 0 || contract.ImportFolderID != imf.ImportFolderID))
                         {
@@ -3628,14 +3631,14 @@ namespace Shoko.Server
                         }
                         else if (imf.CloudID != contract.CloudID )
                         {
-                            if (contract.IsDropSource == 1 && (imf.FolderIsDropDestination || imf.FolderIsDropSource))
+                            if (contract.IsDropSource == 1 && (imf.FolderIsDropDestination /*|| imf.FolderIsDropSource*/))
                             {
-                                response.ErrorMessage = "A drop folders cannot have different file systems";
+                                response.ErrorMessage = "A drop source and target folder cannot have different file systems";
                                 return response;
                             }
-                            if (contract.IsDropDestination == 1 && (imf.FolderIsDropDestination || imf.FolderIsDropSource))
+                            if (contract.IsDropDestination == 1 && (/*imf.FolderIsDropDestination ||*/ imf.FolderIsDropSource))
                             {
-                                response.ErrorMessage = "A drop folders cannot have different file systems";
+                                response.ErrorMessage = "A drop source and target folder cannot have different file systems";
                                 return response;
                             }
                         }

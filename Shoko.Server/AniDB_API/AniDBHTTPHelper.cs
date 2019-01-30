@@ -42,7 +42,7 @@ namespace AniDBAPI
                 Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(ServerSettings.Culture);
                 DateTime start = DateTime.Now;
                 string msg = string.Format(Resources.AniDB_GettingAnimeXML, animeID)+"; prevUpdate: "+prevUpdate;
-                ShokoService.LogToSystem(Constants.DBLogType.APIAniDBHTTP, msg);
+                ShokoService.LogToSystem(Constants.DBLogType.APIAniDBHTTP, msg,uri);
 
                 string rawXML = APIUtils.DownloadWebPage(uri);
 
@@ -58,7 +58,7 @@ namespace AniDBAPI
                 if (content.Length > 100) content = content.Substring(0, 100);
                 msg = string.Format(Resources.AniDB_GotAnimeXML, animeID, ts.TotalMilliseconds,
                     content);
-                ShokoService.LogToSystem(Constants.DBLogType.APIAniDBHTTP, msg);
+                ShokoService.LogToSystem(Constants.DBLogType.APIAniDBHTTP, msg,uri);
 
                 XmlDocument docAnime = null;
                 if (0 < rawXML.Trim().Length && !CheckForBan(rawXML))

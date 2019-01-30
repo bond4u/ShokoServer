@@ -62,7 +62,10 @@ namespace Shoko.Server.Commands
                     TimeSpan tsLastRun = DateTime.Now - sched.LastUpdate;
                     if (tsLastRun.TotalHours < freqHours)
                     {
-                        if (!ForceRefresh) return;
+                      if (!ForceRefresh)
+                        return;
+                      else
+                        logger.Info("SyncMyList: forcing refresh");
                     }
                 }
 
@@ -82,9 +85,10 @@ namespace Shoko.Server.Commands
 
                 // Add missing files on AniDB
                 var onlineFiles = cmd.MyListItems.ToLookup(a => a.FileID);
+                logger.Info("SyncMyList: onlineFiles={0}",onlineFiles.Count);
                 var dictAniFiles = RepoFactory.AniDB_File.GetAll().ToLookup(a => a.Hash);
-
-                int missingFiles = 0;
+logger.Info("SyncMyList: dictAniFiles={0}",dictAniFiles.Count);
+                int missingFiles = 0,updCmds=0,addCmds=0;
                 foreach (SVR_VideoLocal vid in RepoFactory.VideoLocal.GetAll()
                     .Where(a => !string.IsNullOrEmpty(a.Hash)).ToList())
                 {
@@ -115,8 +119,8 @@ namespace Shoko.Server.Commands
                                         false,
                                         seconds);
                                 cmdUpdateFile.Save();
+                                updCmds++;
                             }
-
                             continue;
                         }
                     }
@@ -126,16 +130,19 @@ namespace Shoko.Server.Commands
                     {
                         CommandRequest_AddFileToMyList cmdAddFile = new CommandRequest_AddFileToMyList(vid.Hash);
                         cmdAddFile.Save();
+                        addCmds++;
                     }
                     missingFiles++;
                 }
-                logger.Info($"MYLIST Missing Files: {missingFiles} Added to queue for inclusion");
+                logger.Info($"MYLIST Missing Files: {missingFiles} Added to queue for inclusion\n"+
+                  " addCmds={addCmds}, updCmds={updCmds}");
 
                 List<SVR_JMMUser> aniDBUsers = RepoFactory.JMMUser.GetAniDBUsers();
                 LinkedHashSet<SVR_AnimeSeries> modifiedSeries = new LinkedHashSet<SVR_AnimeSeries>();
 
                 // Remove Missing Files and update watched states (single loop)
                 List<int> filesToRemove = new List<int>();
+                logger.Info("SyncMyList: MyListItems={0}",cmd.MyListItems.Count);
                 foreach (Raw_AniDB_MyListFile myitem in cmd.MyListItems)
                 {
                     try
@@ -155,6 +162,7 @@ namespace Shoko.Server.Commands
                             // look for manually linked files
                             List<CrossRef_File_Episode> xrefs =
                                 RepoFactory.CrossRef_File_Episode.GetByEpisodeID(myitem.EpisodeID);
+//                            logger.Info("SyncMyList: MyItem.EpId={0} xrefs={1}",myitem.EpisodeID,xrefs.Count);
                             foreach (CrossRef_File_Episode xref in xrefs)
                             {
                                 if (xref.CrossRefSource == (int) CrossRefSource.AniDB) continue;
@@ -237,19 +245,23 @@ namespace Shoko.Server.Commands
                         logger.Error($"A MyList Item threw an error while syncing: {ex}");
                     }
                 }
-
+logger.Info("SyncMyList: filesToRemove={0}",filesToRemove.Count);
                 // Actually remove the files
                 if (filesToRemove.Count > 0)
                 {
+                  int rc=0;
                     foreach (int listID in filesToRemove)
                     {
                         CommandRequest_DeleteFileFromMyList deleteCommand =
                             new CommandRequest_DeleteFileFromMyList(listID);
                         deleteCommand.Save();
+                        rc++;
+                        if (0==(rc%100))
+                          logger.Info("SyncMyList: delCmds saved={0}",rc);
                     }
                     logger.Info($"MYLIST Missing Files: {filesToRemove.Count} Added to queue for deletion");
                 }
-
+logger.Info("SyncMyList: filesToUpdate={0}",modifiedSeries.Count);
                 modifiedSeries.ForEach(a => a.QueueUpdateStats());
 
                 logger.Info($"Process MyList: {totalItems} Items, {missingFiles} Added, {filesToRemove.Count} Deleted, {watchedItems} Watched, {modifiedItems} Modified");

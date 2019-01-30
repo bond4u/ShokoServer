@@ -179,15 +179,17 @@ namespace Shoko.Server.Repositories.Direct
             {
                 using (var session = DatabaseFactory.SessionFactory.OpenSession())
                 {
-                    IList<CommandRequest> crs = session.QueryOver<CommandRequest>()
-                        .WhereRestrictionOn(field => field.CommandType).IsIn(CommandTypesHasher.ToArray())
-                        .OrderBy(cr => cr.Priority).Asc
-                        .ThenBy(cr => cr.DateTimeUpdated).Asc
+                    //IList<CommandRequest> crs
+                    CommandRequest c = session.QueryOver<CommandRequest>()
+                        .WhereRestrictionOn(f => f.CommandType).IsIn(CommandTypesHasher.ToArray())
+                        .OrderBy(r => r.Priority).Asc
+                        .ThenBy(r => r.DateTimeUpdated).Asc
                         .Take(1)
-                        .List<CommandRequest>();
-                    if (crs.Count > 0) return crs[0];
-
-                    return null;
+                        //.List<CommandRequest>();
+                        .SingleOrDefault();
+                    //if (crs.Count > 0) return crs[0];
+return c;
+                    //return null;
                 }
             }
             catch (Exception e)
@@ -217,15 +219,17 @@ namespace Shoko.Server.Repositories.Direct
             {
                 using (var session = DatabaseFactory.SessionFactory.OpenSession())
                 {
-                    IList<CommandRequest> crs = session.QueryOver<CommandRequest>()
-                        .WhereRestrictionOn(field => field.CommandType).IsIn(CommandTypesImages.ToArray())
-                        .OrderBy(cr => cr.Priority).Asc
-                        .ThenBy(cr => cr.DateTimeUpdated).Asc
-                        .Take(1)
-                        .List<CommandRequest>();
-                    if (crs.Count > 0) return crs[0];
-
-                    return null;
+                    //IList<CommandRequest> crs
+                    CommandRequest cr = session.QueryOver<CommandRequest>()
+                        .WhereRestrictionOn(f => f.CommandType).IsIn(CommandTypesImages.ToArray())
+                        .OrderBy(r => r.Priority).Asc
+                        .ThenBy(r => r.DateTimeUpdated).Asc
+                        //.Take(1)
+                        //.List<CommandRequest>();
+                        .SingleOrDefault();
+                    //if (crs.Count > 0) return crs[0];
+return cr;
+                    //return null;
                 }
             }
             catch (Exception e)
@@ -285,7 +289,7 @@ namespace Shoko.Server.Repositories.Direct
                 return crs;
             }
         }
-
+/*
         public List<CommandRequest> GetByCommandTypes(int[] types)
         {
             using (var session = DatabaseFactory.SessionFactory.OpenSession())
@@ -299,7 +303,7 @@ namespace Shoko.Server.Repositories.Direct
                 return crs;
             }
         }
-
+*/
         public void ClearGeneralQueue()
         {
             using (var session = DatabaseFactory.SessionFactory.OpenSession())

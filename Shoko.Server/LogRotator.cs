@@ -19,13 +19,14 @@ namespace Shoko.Server
             if (ServerSettings.RotateLogs)
             {
                 Delete_Logs();
-                Compress_Logs();
+//                Compress_Logs();
             }
         }
 
         internal static string GetCurrentLogFile()
         {
             var fileTarget = (FileTarget) LogManager.Configuration.FindTargetByName("file");
+Console.WriteLine("fileTarget: "+fileTarget);
             return fileTarget == null
                 ? string.Empty
                 : Path.GetFullPath(fileTarget.FileName.Render(new LogEventInfo {Level = LogLevel.Info}));
@@ -33,7 +34,11 @@ namespace Shoko.Server
 
         private string GetDirectory()
         {
-            return new FileInfo(GetCurrentLogFile()).DirectoryName;
+string tmp = GetCurrentLogFile();
+Console.WriteLine("currentLogFile: "+tmp);
+            tmp = new FileInfo(tmp).DirectoryName;
+Console.WriteLine("log dir: "+tmp);
+return tmp;
         }
 
         private List<string> GetFileNames()

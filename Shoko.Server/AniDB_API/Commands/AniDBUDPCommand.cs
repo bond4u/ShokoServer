@@ -79,7 +79,7 @@ namespace AniDBAPI.Commands
                 if (commandType != enAniDBCommandType.Login)
                 {
                     string msg = string.Format("UDP_COMMAND: {0}", mcommandText);
-                    ShokoService.LogToSystem(Constants.DBLogType.APIAniDBUDP, msg);
+                    ShokoService.LogToSystem(Constants.DBLogType.APIAniDBUDP, msg,null);
                 }
                 else
                 {
@@ -250,7 +250,7 @@ namespace AniDBAPI.Commands
 
                     TimeSpan ts = DateTime.Now - start;
                     string msg = string.Format("UDP_RESPONSE in {0} ms - {1} ", ts.TotalMilliseconds, socketResponse);
-                    ShokoService.LogToSystem(Constants.DBLogType.APIAniDBUDP, msg);
+                    ShokoService.LogToSystem(Constants.DBLogType.APIAniDBUDP, msg,null);
                 }
                 else
                 {
@@ -259,7 +259,7 @@ namespace AniDBAPI.Commands
                     TimeSpan ts = DateTime.Now - start;
                     string msg = string.Format("UDP_RESPONSE_TRUNC in {0}ms - {1} ", ts.TotalMilliseconds,
                         socketResponse);
-                    ShokoService.LogToSystem(Constants.DBLogType.APIAniDBUDP, msg);
+                    ShokoService.LogToSystem(Constants.DBLogType.APIAniDBUDP, msg,null);
                 }
             }
             int val = 0;

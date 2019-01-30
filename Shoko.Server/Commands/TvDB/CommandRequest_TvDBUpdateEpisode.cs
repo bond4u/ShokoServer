@@ -52,11 +52,13 @@ namespace Shoko.Server.Commands
                 if (ep == null) return;
                 var xref = RepoFactory.CrossRef_AniDB_TvDB.GetByTvDBID(ep.SeriesID).DistinctBy(a => a.AniDBID);
                 if (xref == null) return;
+//logger.Info("ProcessCommand: xrefs: {0}", xref.Count);
                 foreach (var crossRefAniDbTvDbv2 in xref)
                 {
                     var anime = RepoFactory.AnimeSeries.GetByAnimeID(crossRefAniDbTvDbv2.AniDBID);
                     if (anime == null) continue;
                     var episodes = RepoFactory.AnimeEpisode.GetBySeriesID(anime.AnimeSeriesID);
+logger.Info("ProcessCommand: episodes: {0}",episodes.Count);
                     foreach (SVR_AnimeEpisode episode in episodes)
                     {
                         // Save

@@ -22,9 +22,9 @@ namespace Shoko.Server
 
         public static bool DebugFlag = false;
 
-        public static void LogToSystem(string logType, string logMessage)
+        public static void LogToSystem(string logType, string logMessage, string url)
         {
-            logger.Trace($"{logType} - {logMessage}");
+            logger.Info($"{logType} - {logMessage}"+(string.IsNullOrEmpty(url)?"":"\n Url: "+url));
         }
 
         private static DateTime lastAniDBMessage = DateTime.Now;

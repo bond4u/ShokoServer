@@ -53,7 +53,7 @@ namespace Shoko.Server.Providers.TraktTV
                              "Verb: " + verb + Environment.NewLine +
                              "uri: " + uri + Environment.NewLine +
                              "json: " + json + Environment.NewLine;
-                logger.Trace(msg);
+                logger.Info(msg);
 
                 var request = (HttpWebRequest) WebRequest.Create(uri);
                 request.KeepAlive = true;
@@ -94,7 +94,7 @@ namespace Shoko.Server.Providers.TraktTV
                 msg = "Trakt SEND Data - Response" + Environment.NewLine +
                       "Status Code: " + statusCode + Environment.NewLine +
                       "Response: " + strResponse + Environment.NewLine;
-                logger.Trace(msg);
+                logger.Info(msg);
 
                 return statusCode;
             }
@@ -143,7 +143,7 @@ namespace Shoko.Server.Providers.TraktTV
 
             string msg = "Trakt GET Data" + Environment.NewLine +
                          "uri: " + uri + Environment.NewLine;
-            logger.Trace(msg);
+            logger.Info(msg);
 
             request.KeepAlive = true;
             request.Method = "GET";
@@ -179,7 +179,7 @@ namespace Shoko.Server.Providers.TraktTV
                 {
                     msg = "Trakt GET Data - Response" + Environment.NewLine +
                           "Response: " + strResponse + Environment.NewLine;
-                    logger.Trace(msg);
+                    logger.Info(msg);
                 }
 
                 return strResponse;

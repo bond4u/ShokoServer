@@ -20,15 +20,17 @@ namespace AniDBAPI
             try
             {
                 AniDbRateLimiter.Instance.EnsureRate();
-
+logger.Info("DownloadWebPage: "+url);
                 HttpWebRequest webReq = (HttpWebRequest) WebRequest.Create(url);
-                webReq.Timeout = 20000; // 20 seconds
+                webReq.Timeout = 45000; // 20 seconds
                 webReq.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip,deflate");
                 webReq.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1";
 
                 webReq.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+logger.Info("DOwnloadWebPage: making request..");
                 HttpWebResponse WebResponse = (HttpWebResponse) webReq.GetResponse();
-
+logger.Info("DownloadWebPage: resp: "+WebResponse);
+logger.Info("DownloadWebPage: resp.status: "+WebResponse?.StatusCode);
                 Stream responseStream = WebResponse.GetResponseStream();
                 String enco = WebResponse.CharacterSet;
                 Encoding encoding = null;
@@ -36,6 +38,7 @@ namespace AniDBAPI
                     encoding = Encoding.GetEncoding(WebResponse.CharacterSet);
                 if (encoding == null)
                     encoding = Encoding.Default;
+logger.Info("DownloadWebPage: enc: "+encoding);
                 StreamReader Reader = new StreamReader(responseStream, encoding);
 
                 string output = Reader.ReadToEnd();
@@ -47,7 +50,7 @@ namespace AniDBAPI
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Error in APIUtils.DownloadWebPage: {0}");
+                logger.Error(ex, "Error in APIUtils.DownloadWebPage: "+ex);
                 return string.Empty;
             }
         }
@@ -57,13 +60,13 @@ namespace AniDBAPI
             try
             {
                 AniDbRateLimiter.Instance.EnsureRate();
-
                 HttpWebResponse response = null;
+logger.Info("DownloadWebBinary: "+url);
                 HttpWebRequest webReq = (HttpWebRequest) WebRequest.Create(url);
                 // Note: some network proxies require the useragent string to be set or they will deny the http request
                 // this is true for instance for EVERY thailand internet connection (also needs to be set for banners/episodethumbs and any other http request we send)
                 webReq.UserAgent = "Anime2MP";
-                webReq.Timeout = 20000; // 20 seconds
+                webReq.Timeout = 45000; // 20 seconds
                 response = (HttpWebResponse) webReq.GetResponse();
 
                 return response != null 
